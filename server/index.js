@@ -1,10 +1,16 @@
 const express = require('express');
+
 const dotenv = require('dotenv');
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+const userRoutes = require('./routes/user.route')
 const database = require('./database');
+const PORT = process.env.PORT || 3000;
 const app = express();
+
+
+app.use('/user', userRoutes);
+
 
 
 async function listen () {
