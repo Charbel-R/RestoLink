@@ -8,7 +8,7 @@ exports.test1 = (req, res) => {
   });
 }
 
-exports.signin = async (req, res) => {
+exports.signup = async (req, res) => {
   console.log(req.body)
   const { username, email, password} = req.body;
   const hashPass = bcryptjs.hashSync(password, 10);

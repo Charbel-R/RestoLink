@@ -1,5 +1,6 @@
 const express = require('express');
-
+// TODO install and use cors 
+const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -11,6 +12,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.json());
+app.use(cors())
 
 app.use('/user', userRoutes);
 app.use('/auth', authRoutes);
