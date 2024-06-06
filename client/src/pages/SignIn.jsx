@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react";
 import { signIn } from "../ApiServer";
 
@@ -10,7 +10,7 @@ export default function SignIn() {
     password: ''
   });
   const [isLoading, setIsLoading] = useState(false);
-
+  const navigate = useNavigate();
 
   const handleChange = e => {
     setSignUpForm({
@@ -24,6 +24,7 @@ export default function SignIn() {
     setIsLoading(true);
     signIn(signUpForm);
     setIsLoading(false);
+    navigate('/')
     setSignUpForm({
         username: '',
         email: '',
