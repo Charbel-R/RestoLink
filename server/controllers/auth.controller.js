@@ -32,10 +32,11 @@ exports.signin = async (req, res) => {
     const validatedPass = await bcryptjs.compareSync(password, user.password);
     if (!validatedPass) throw new Error();
     const accessToken = jwt.sign({ _id: user._id }, SECRET_KEY);
-    const { password: hashPass, ...rest } = user._doc
+    const { password: hashPass, ...userInfo } = user._doc;
+    const expiryDate = new Date(Date.now() + 3600000); //1 hr 
     res
-    .cookie('accesToken', accessToken)
-    .status(200).send({ rest });
+    .cookie('accesToken', accessToken, {httpOnly: true, expires: expiryDate})
+    .status(200).send({ userInfo });
   } catch (error) {
     res
       .status(401)

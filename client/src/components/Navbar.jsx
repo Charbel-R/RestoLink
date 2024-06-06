@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 export default function Navbar() {
   return (
-    <div className='bg-pink-100'>
+    <div className='bg-blue-800 text-white'>
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
         <Link to={'/'} >
           <h1 className="font-bold">RestoLink</h1>  
