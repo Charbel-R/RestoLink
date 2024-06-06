@@ -1,23 +1,41 @@
-const User = require("../models/user.model");
 const bcryptjs = require('bcryptjs');
-
-exports.test1 = (req, res) => {
-
-  res.json({
-    message: 'Auth Controllers Working ',
-  });
-}
+const jwt = require('jsonwebtoken');
+const User = require("../models/user.model");
+const SECRET_KEY = process.env.SECRET_KEY || 'This isint secure';
+// TODO create expiry date for cookie
 
 exports.signup = async (req, res) => {
-  console.log(req.body)
   const { username, email, password} = req.body;
+  const user = await User.findOne({ email: email });
+  if (user)
+    return res
+      .status(409)
+      .send({ error: '409', message: 'User already exists' });
   const hashPass = bcryptjs.hashSync(password, 10);
-
   const newUser = new User({username, email, password: hashPass});
   try {
-    await newUser.save();
-    res.status(201).json({message: 'User created successfully'})
+    const { _id } = await newUser.save();
+    const accessToken = jwt.sign({ _id }, SECRET_KEY);
+    res.status(201).json({
+      message: 'User created successfully',
+      accessToken
+    })
   } catch (error) {
     res.status(500).json(error.message)
+  }
+}
+
+exports.signin = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email: email });
+    const validatedPass = await bcryptjs.compareSync(password, user.password);
+    if (!validatedPass) throw new Error();
+    const accessToken = jwt.sign({ _id: user._id }, SECRET_KEY);
+    res.status(200).send({ accessToken });
+  } catch (error) {
+    res
+      .status(401)
+      .send({ error: '401', message: 'Username or password is incorrect' });
   }
 }
