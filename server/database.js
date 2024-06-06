@@ -5,4 +5,6 @@ console.log(process.env.MONGO_URI)
 
 const database = mongoose.connect(process.env.MONGO_URI);
 
+
+
 module.exports = database;

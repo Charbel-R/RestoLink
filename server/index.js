@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
+// TODO add .env file to gitignore 
 
 const PORT = process.env.PORT
 const database = require('./database');
