@@ -14,3 +14,17 @@ export const addUser = async ({username, email, password}) => {
   return resp
 
 }  
+
+export const signIn = async ({ email, password}) => {
+  const user = await fetch(`${baseUrl}/auth/signin`, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ email, password})
+  })
+  
+  const resp = await user.json()
+  return resp
+
+}  

@@ -1,5 +1,4 @@
 const express = require('express');
-// TODO install and use cors 
 const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config();
