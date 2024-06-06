@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 // TODO add .env file to gitignore 
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3000;
 const database = require('./database');
 const app = express();
 
