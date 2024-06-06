@@ -4,12 +4,16 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const userRoutes = require('./routes/user.route')
+const authRoutes = require('./routes/auth.route')
+
 const database = require('./database');
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+app.use(express.json());
 
 app.use('/user', userRoutes);
+app.use('/auth', authRoutes);
 
 
 
