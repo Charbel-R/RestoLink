@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   profilePicture: {
     type: String,
-    default: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F4733409%2Fbasic_profile_ui_icon&psig=AOvVaw3fHZ7FHSLRcDxVS4OXPmxY&ust=1717793090617000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJiHqqHsx4YDFQAAAAAdAAAAABAE'
+    default: 'https://iio.azcast.arizona.edu/sites/default/files/profile-blank-whitebg.png',
   }
 }, {timestamps: true});
 

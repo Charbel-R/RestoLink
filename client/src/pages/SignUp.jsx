@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react";
-import { signUp } from "../ApiServer.js";
+import { signUp } from "../AuthApiServer.js";
 
 
 export default function SignUp() {
