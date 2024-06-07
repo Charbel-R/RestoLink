@@ -2,7 +2,7 @@ const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require("../models/user.model");
 const SECRET_KEY = process.env.SECRET_KEY || 'This isint secure';
-// TODO create expiry date for cookie
+
 
 exports.signup = async (req, res) => {
   const { username, email, password} = req.body;

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react";
-import { addUser } from "../ApiServer.js";
+import { signUp } from "../ApiServer.js";
 
 
 export default function SignUp() {
@@ -22,7 +22,7 @@ export default function SignUp() {
   const handleSubmit = event => {
     event.preventDefault();
     setIsLoading(true);
-    addUser(signUpForm);
+    signUp(signUpForm);
     setIsLoading(false);
     navigate('/sign-in')
     setSignUpForm({
@@ -69,7 +69,7 @@ export default function SignUp() {
         <button 
           disabled={isLoading} 
           className="bg-blue-600 text-white p-3 rounded-lg hover:opacity-95 disabled:opacity-60">
-            {isLoading ? 'Creating' : 'SIGN UP'}
+            {isLoading ? 'Creating... ' : 'SIGN UP'}
         </button>
       </form>
       <div className="flex gap-2 mt-5">

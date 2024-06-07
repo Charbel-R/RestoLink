@@ -1,7 +1,7 @@
 const baseUrl = 'http://localhost:3000'
 
 
-export const addUser = async ({username, email, password}) => {
+export const signUp = async ({username, email, password}) => {
   const user = await fetch(`${baseUrl}/auth/signup`, {
     method: 'POST',
     headers: {
