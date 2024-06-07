@@ -4,29 +4,36 @@ import { signIn } from "../ApiServer";
 
 
 export default function SignIn() {
-  const [signUpForm, setSignUpForm] = useState({
-    username: '',
+  const [signInForm, setSignInForm] = useState({
     email: '',
     password: ''
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = e => {
-    setSignUpForm({
-      ...signUpForm,
+    setSignInForm({
+      ...signInForm,
       [e.target.name]: e.target.value
     })
   }
 
-  const handleSubmit = event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    signIn(signUpForm);
-    setIsLoading(false);
-    navigate('/')
-    setSignUpForm({
-        username: '',
+
+    try {
+      setError(false)
+      await signIn(signInForm);
+      setIsLoading(false);
+      navigate('/profile')
+    } catch {
+      setIsLoading(false);
+      setError(true)
+    }
+
+    setSignInForm({
         email: '',
         password: ''
     })
@@ -39,20 +46,11 @@ export default function SignIn() {
         onSubmit={handleSubmit} 
         className="flex flex-col gap-4 "
         >
-        {/* <input 
-          type="text" 
-          placeholder="Username" 
-          name="username" 
-          value={signUpForm.username}
-          className="bg-slate-100 p-3 rounded-lg"
-          onChange={handleChange}
-          required
-          /> */}
         <input 
           type="text" 
           placeholder="email" 
           name="email" 
-          value={signUpForm.email}
+          value={signInForm.email}
           className="bg-slate-100 p-3 rounded-lg"
           onChange={handleChange}
           required
@@ -61,7 +59,7 @@ export default function SignIn() {
           type="password" 
           placeholder="password" 
           name="password" 
-          value={signUpForm.password}
+          value={signInForm.password}
           className="bg-slate-100 p-3 rounded-lg"
           onChange={handleChange}
           required
@@ -78,6 +76,8 @@ export default function SignIn() {
           <span className="text-blue-500">Sign up</span>
         </Link>
       </div>
+      <p className="text-red-700 mt-5"> {error && 'something went wrong'} </p>
+
     </div>
   )
 }

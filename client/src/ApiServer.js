@@ -11,6 +11,14 @@ export const signUp = async ({username, email, password}) => {
   })
   
   const resp = await user.json()
+  if (!user.ok) {
+    throw new Error(`Request failed with status ${user.status}`);
+  }
+
+  if (resp.error) {
+    throw new Error(resp.error.message || "Signup failed. Please check your information.");
+  }
+  
   return resp
 
 }  
@@ -25,6 +33,11 @@ export const signIn = async ({ email, password}) => {
   })
   
   const resp = await user.json()
+
+  if (!user.ok) {
+    throw new Error(`Request failed with status ${user.status}`);
+  }
+  
   return resp
 
 }  

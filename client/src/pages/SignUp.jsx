@@ -10,6 +10,7 @@ export default function SignUp() {
     password: ''
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = e => {
@@ -19,12 +20,20 @@ export default function SignUp() {
     })
   }
 
-  const handleSubmit = event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    signUp(signUpForm);
-    setIsLoading(false);
-    navigate('/sign-in')
+    
+    try {
+      setError(false);
+      await signUp(signUpForm);
+      setIsLoading(false);
+      navigate('/sign-in')
+    } catch (error) {
+      setIsLoading(false);
+      setError(true)
+    }
+
     setSignUpForm({
         username: '',
         email: '',
@@ -68,7 +77,7 @@ export default function SignUp() {
           />
         <button 
           disabled={isLoading} 
-          className="bg-blue-600 text-white p-3 rounded-lg hover:opacity-95 disabled:opacity-60">
+          className="bg-blue-600 text-white p-3 rounded-lg hover:opacity-95 disabled:opacity-80">
             {isLoading ? 'Creating... ' : 'SIGN UP'}
         </button>
       </form>
@@ -78,6 +87,7 @@ export default function SignUp() {
           <span className="text-blue-500">Sign in</span>
         </Link>
       </div>
+      <p className="text-red-700 mt-5"> {error && 'something went wrong'} </p>
     </div>
   )
 }
