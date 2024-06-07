@@ -1,16 +1,18 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react";
-import { signIn } from "../ApiServer";
-
+import { signIn } from "../AuthApiServer";
+import { signInStart, signInSuccess, signInFailed } from "../store/slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function SignIn() {
   const [signInForm, setSignInForm] = useState({
     email: '',
     password: ''
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const { isLoading, error } = useSelector((state) => state.user);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = e => {
     setSignInForm({
@@ -21,16 +23,19 @@ export default function SignIn() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
-
+    dispatch(signInStart());
     try {
-      setError(false)
-      await signIn(signInForm);
-      setIsLoading(false);
+      const userData = await signIn(signInForm);
+      dispatch(signInSuccess(userData))
       navigate('/profile')
     } catch {
-      setIsLoading(false);
-      setError(true)
+      let errorMessage;
+      if (error.response && error.response.data) { 
+        errorMessage = error.response.data.error || "Sign-in failed. Please check your credentials.";
+      } else {
+        errorMessage = error || "An error occurred during sign-in.";
+      }
+      dispatch(signInFailed(errorMessage));
     }
 
     setSignInForm({
@@ -76,7 +81,7 @@ export default function SignIn() {
           <span className="text-blue-500">Sign up</span>
         </Link>
       </div>
-      <p className="text-red-700 mt-5"> {error && 'something went wrong'} </p>
+      <p className="text-red-700 mt-5"> {error ? error  || 'something went wrong' : ''} </p>
 
     </div>
   )

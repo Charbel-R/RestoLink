@@ -37,6 +37,11 @@ export const signIn = async ({ email, password}) => {
   if (!user.ok) {
     throw new Error(`Request failed with status ${user.status}`);
   }
+
+  if (resp.error) { 
+    throw new Error(resp.error.message || "Sign-in failed. Please check your credentials.");
+  }
+
   
   return resp
 
