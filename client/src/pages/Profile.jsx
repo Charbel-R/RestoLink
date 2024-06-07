@@ -1,9 +1,29 @@
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { logOut } from '../AuthApiServer';
+import { signOut } from '../store/slices/userSlice';
 
 export default function Profile() {
   const { currentUser } = useSelector(state => state.user)
+  const dispatch = useDispatch();
 
-  return (
+  const handleSignOut = async () => {
+    try {
+      await logOut();
+      dispatch(signOut());
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        console.error('Unauthorized: Invalid session or token.');
+      } else {
+        console.error('Error signing out:', error);
+      }
+    } finally {
+      localStorage.removeItem('accessToken');
+      window.location.href = '/sign-in';
+    }
+  };
+
+  return ( 
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>
         Profile
@@ -40,7 +60,7 @@ export default function Profile() {
       </form>
       <div className='flex justify-between mt-5'>
         <span className='text-red-700 cursor-pointer'>Delete Account</span>
-        <span className='text-red-700 cursor-pointer'>Sign out</span>
+        <span onClick={handleSignOut} className='text-red-700 cursor-pointer'>Sign out</span>
       </div>
     </div>
   )

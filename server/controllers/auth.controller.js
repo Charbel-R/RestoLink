@@ -43,3 +43,13 @@ exports.signin = async (req, res) => {
       .send({ error: '401', message: 'Username or password is incorrect' });
   }
 }
+
+exports.profile = async (req, res) => {
+  // TODO Create Profile 
+};
+
+exports.signout = async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173'); 
+  res.clearCookie('accessToken'); 
+  res.send('Signout success!');
+};
