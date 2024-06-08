@@ -5,6 +5,7 @@ dotenv.config();
 
 const userRoutes = require('./routes/user.route')
 const authRoutes = require('./routes/auth.route')
+const suppliersRoutes = require('./routes/suppliers.route')
 
 const database = require('./database');
 const PORT = process.env.PORT || 3000;
@@ -15,7 +16,7 @@ app.use(cors())
 
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
-
+app.use('/suppliers', suppliersRoutes )
 
 
 async function listen () {
