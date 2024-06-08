@@ -1,16 +1,22 @@
+import { useState } from "react";
 
 
 export default function SupplierDetail() {
-  const supplier = {
-    // ... Your supplier data (replace with your actual data structure)
-    "supplierName": "A.G. Scholtes B.V.",
-    "address": "2491 BT Den Haag",
-    "telephone": "+31 070 317 54 17",
-    "email": "info@agscholtes.nl",
-    "logoUrl": "https://www.agscholtes.nl/wp-content/uploads/2019/08/Scholtes_Logo_Corporate_FC.png",
-    "category": "Meat Supplier",
-    "website": "www.agscholtes.nl",
-    "description": "Fourth-generation family-owned business specializing in high-quality beef for the hospitality industry, butchers, wholesalers, and supermarkets.",
+  const [supplier, setSupplier] = useState({
+    "id":'2',
+    "supplierName": "La Carne",
+    "address": "2491 BT Den Haag", 
+    "telephone": "+31 038 202 21 72", 
+    "email": "info@lacarne.nl",  
+    "logoUrl": "https://www.lacarne.nl/image/catalog/development/logo.svg", 
+    "category": "Meat Supplier", 
+    "website": "https://www.lacarne.nl/",  
+    "description": "Premium beef retailer offering high-quality cuts directly to consumers. Not a wholesale supplier.",
+    "isFavorite": true,
+  });
+
+  const toggleFavorite = () => {
+    setSupplier({ ...supplier, isFavorite: !supplier.isFavorite });
   };
 
   if (!supplier) {
@@ -56,6 +62,9 @@ export default function SupplierDetail() {
               </a>
             </div>
           )}
+          <button onClick={toggleFavorite} className="text-sm font-medium text-blue-500 hover:text-blue-400 transition duration-300 ease-in-out">
+            {supplier.isFavorite ? "Unfavorite" : "Favorite"}
+          </button>
         </div>
       </div>
     </div>
