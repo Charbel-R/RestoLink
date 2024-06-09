@@ -27,7 +27,7 @@ export default function SignIn() {
     try {
       const userData = await signIn(signInForm);
       dispatch(signInSuccess(userData))
-      navigate('/profile')
+      navigate('/')
     } catch {
       let errorMessage;
       if (error.response && error.response.data) { 

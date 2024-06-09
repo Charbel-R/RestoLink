@@ -1,27 +1,29 @@
-import { useState } from "react";
 
+import { useDispatch, useSelector } from 'react-redux';
+import { updateSupplier } from '../../store/slices/supplierSlice';
 
-export default function SupplierDetail() {
-  const [supplier, setSupplier] = useState({
-    "id":'2',
-    "supplierName": "La Carne",
-    "address": "2491 BT Den Haag", 
-    "telephone": "+31 038 202 21 72", 
-    "email": "info@lacarne.nl",  
-    "logoUrl": "https://www.lacarne.nl/image/catalog/development/logo.svg", 
-    "category": "Meat Supplier", 
-    "website": "https://www.lacarne.nl/",  
-    "description": "Premium beef retailer offering high-quality cuts directly to consumers. Not a wholesale supplier.",
-    "isFavorite": true,
-  });
+// eslint-disable-next-line react/prop-types
+export default function SupplierDetail({ chosenSupplier }) {
+  const dispatch = useDispatch();
+ 
+  const { currentUser } = useSelector(state => state.user);
 
-  const toggleFavorite = () => {
-    setSupplier({ ...supplier, isFavorite: !supplier.isFavorite });
+  const toggleFavorite = async () => {
+    const updatedSupplier = {
+      ...supplier,
+      isFavorite: !supplier.isFavorite,
+    };
+    try {
+      await dispatch(updateSupplier(updatedSupplier));
+    } catch (error) {
+      console.error('Error updating supplier favorite:', error);
+    }
   };
 
-  if (!supplier) {
+  if (!chosenSupplier) {
     return <div>Supplier not found!</div>;
   }
+  const supplier = chosenSupplier;
 
   return (
     <div className="container mx-auto mt-20 px-4 py-8">
@@ -62,9 +64,10 @@ export default function SupplierDetail() {
               </a>
             </div>
           )}
-          <button onClick={toggleFavorite} className="text-sm font-medium text-blue-500 hover:text-blue-400 transition duration-300 ease-in-out">
+          {currentUser &&
+            <button onClick={toggleFavorite} className="text-sm font-medium text-blue-500 hover:text-blue-400 transition duration-300 ease-in-out">
             {supplier.isFavorite ? "Unfavorite" : "Favorite"}
-          </button>
+          </button>}
         </div>
       </div>
     </div>

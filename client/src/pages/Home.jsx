@@ -12,7 +12,7 @@ export default function Home() {
   // Fetch suppliers on component mount
   useEffect(() => {
     dispatch(fetchSuppliers());
-  }, [dispatch, suppliers]); // Include dispatch in dependency array
+  }, [dispatch, isLoading]); // Include dispatch in dependency array
 
 
   return (
@@ -22,7 +22,7 @@ export default function Home() {
       {suppliers.length > 0 && (
         <div className="my-2 mx-5">
           <SupplierList suppliers={suppliers}/>
-          <SupplierDetail />
+          <SupplierDetail chosenSupplier={suppliers[2]}/>
         </div>
       )}
     </>

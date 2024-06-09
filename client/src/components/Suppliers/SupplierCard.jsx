@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 
-import { useDispatch } from 'react-redux';
+import { useDispatch , useSelector} from 'react-redux';
 import { updateSupplier } from '../../store/slices/supplierSlice'; // Import updateSupplier thunk
 
 export default function SupplierCard({ supplier }) {
   const dispatch = useDispatch();
+
+  const { currentUser } = useSelector(state => state.user);
 
   const handleToggleFavorite = async () => {
     const updatedSupplier = {
@@ -17,6 +19,7 @@ export default function SupplierCard({ supplier }) {
       console.error('Error updating supplier favorite:', error);
     }
   };
+
   return (
     <div className="relative">
       <div className="p-6 flex flex-col items-center space-y-4">
@@ -43,7 +46,7 @@ export default function SupplierCard({ supplier }) {
           </span>
         </div>
       </div>
-      
+      {currentUser &&
       <button
         onClick={handleToggleFavorite}
         className="absolute top-2 right-2 p-1 bg-white rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -53,7 +56,7 @@ export default function SupplierCard({ supplier }) {
         ) : (
           <div className="w-4 h-4 bg-red-400 rounded-full"></div>
         )}
-      </button>
+      </button>}
     </div>
   );
 }

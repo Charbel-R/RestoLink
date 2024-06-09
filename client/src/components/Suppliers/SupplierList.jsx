@@ -1,17 +1,15 @@
-import SupplierCard from "./SupplierCard";
+import SupplierCard from "./SupplierCard"; 
+import { useSelector } from "react-redux";
 
-// eslint-disable-next-line react/prop-types
 export default function SupplierList({suppliers}) {
-  
-  // eslint-disable-next-line react/prop-types
-  const favoriteSuppliers = suppliers.filter(supplier => supplier.isFavorite);
+  const { currentUser } = useSelector(state => state.user);
 
-  
+  const favoriteSuppliers = suppliers.filter(supplier => supplier.isFavorite);
 
   return (
     <div className="container mx-auto px-4 ">
       {/* List of Favorite Suppliers (conditionally rendered) */}
-      {favoriteSuppliers.length > 0 && (
+      {currentUser && favoriteSuppliers.length > 0 && (
         <div className="mt-8">
           <h3 className="text-2xl font-bold  text-indigo-600 mb-4">
             Your Favorite Suppliers
