@@ -11,6 +11,7 @@ const baseUrl = 'http://localhost:3000';
 export default function Profile() {
   const { currentUser } = useSelector(state => state.user);
   const { token } = useSelector(state => state.user);
+  
   const accessToken = token;
   const dispatch = useDispatch();
 
