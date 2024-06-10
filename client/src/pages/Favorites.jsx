@@ -1,12 +1,12 @@
-import React from 'react';
+
 import { useSelector } from 'react-redux';
 import SupplierCard from '../components/Suppliers/SupplierCard';
 
 export default function Favorites() {
-  const { currentUser } = useSelector(state => state.user);
-  // const { suppliers } = useSelector(state => state.suppliers);
-  const favoriteSuppliers = currentUser.favoriteSuppliers || []; 
-  // const favoriteSuppliers = suppliers.slice(0,3)
+
+  const { favoriteSuppliers } = useSelector(state => state.suppliers)
+
+// console.log(favoriteSuppliers);
 
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-8">

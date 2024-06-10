@@ -1,10 +1,22 @@
 import SupplierCard from "./SupplierCard";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchSuppliersById } from "../../store/slices/supplierSlice";
 
-export default function SupplierList({ suppliers, onSupplierClick }) {
-  const { currentUser } = useSelector(state => state.user);
 
-  const favoriteSuppliers = suppliers.filter(supplier => supplier.isFavorite);
+export default function SupplierList({ onSupplierClick }) {
+  const dispatch = useDispatch();
+
+  const { currentUser, mySuppliersIds } = useSelector(state => state.user);
+  const { favoriteSuppliers , suppliers} = useSelector(state => state.suppliers);
+
+  console.log(mySuppliersIds)
+  useEffect(() => {
+    if (currentUser && mySuppliersIds.length > 0) {
+      dispatch(fetchSuppliersById(mySuppliersIds)); // Dispatch thunk with favorite IDs
+    }
+  }, [currentUser, dispatch, mySuppliersIds]); // Include dispatch in dependency array
 
   return (
     <div className="container mx-auto px-4 ">
@@ -23,7 +35,7 @@ export default function SupplierList({ suppliers, onSupplierClick }) {
               >
                 <SupplierCard supplier={supplier} />
               </li>
-            ))}
+            )) }
           </ul>
         </div>
       )}

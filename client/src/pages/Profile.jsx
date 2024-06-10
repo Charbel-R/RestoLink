@@ -5,6 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
 import { logOut } from '../AuthApiServer';
 import { signOut, updateUser } from '../store/slices/userSlice';
+import { resetFavorites } from '../store/slices/supplierSlice';
 
 const baseUrl = 'http://localhost:3000';
 
@@ -64,6 +65,8 @@ export default function Profile() {
     try {
       await logOut();
       dispatch(signOut());
+      dispatch(resetFavorites())
+
     } catch (error) {
       if (error.response && error.response.status === 401) {
         console.error('Unauthorized: Invalid session or token.');
