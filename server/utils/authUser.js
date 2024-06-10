@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 exports.verifyToken = (req, res, next) => {
-  const token = req.cookies.access_token;
+  const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("You need to Login");
 
   jwt.verify(token, process.env.SECRET_KEY), (err, user) => {

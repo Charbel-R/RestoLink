@@ -15,8 +15,8 @@ app.use(express.json());
 app.use(cors())
 
 app.use('/auth', authRoutes);
+app.use('/suppliers', suppliersRoutes);
 app.use('/user', userRoutes);
-app.use('/suppliers', suppliersRoutes )
 
 
 async function listen () {

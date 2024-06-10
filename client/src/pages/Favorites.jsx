@@ -1,0 +1,35 @@
+import React from 'react';
+import { useSelector } from 'react-redux';
+import SupplierCard from '../components/Suppliers/SupplierCard';
+
+export default function Favorites() {
+  const { currentUser } = useSelector(state => state.user);
+  // const { suppliers } = useSelector(state => state.suppliers);
+  const favoriteSuppliers = currentUser.favoriteSuppliers || []; 
+  // const favoriteSuppliers = suppliers.slice(0,3)
+
+  return (
+    <div className="min-h-screen bg-gray-100 px-4 py-8">
+      <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Your Favorite Suppliers</h1>
+      {favoriteSuppliers.length === 0 ? (
+        <div className="flex flex-col items-center justify-center h-full">
+         
+          <p className="text-xl font-medium text-gray-500">
+            Your favorites list is currently empty.
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {favoriteSuppliers.map((supplier) => (
+            <div
+              key={supplier._id}
+              className="bg-white rounded-lg shadow-md overflow-hidden"
+            >
+              <SupplierCard supplier={supplier} />
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

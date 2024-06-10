@@ -45,7 +45,7 @@ export const signIn = async ({ email, password}) => {
   return resp
 } 
 
-// TODO check the functionality of the log out !! the token is not beig deleted
+
 export const logOut = async () => {
   await fetch(`${baseUrl}/auth/signout`) 
 }  
