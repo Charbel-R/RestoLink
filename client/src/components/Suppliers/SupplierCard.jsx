@@ -50,7 +50,7 @@ export default function SupplierCard({ supplier }) {
       <button
         onClick={handleToggleFavorite}
         className="absolute top-2 right-2 p-1 bg-white rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
+        >
         {supplier.isFavorite ? (
           <div className="w-4 h-4 bg-blue-600 rounded-full"></div>
         ) : (

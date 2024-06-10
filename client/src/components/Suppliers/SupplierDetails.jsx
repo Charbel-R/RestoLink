@@ -1,11 +1,12 @@
-
 import { useDispatch, useSelector } from 'react-redux';
 import { updateSupplier } from '../../store/slices/supplierSlice';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 // eslint-disable-next-line react/prop-types
-export default function SupplierDetail({ chosenSupplier }) {
+export default function SupplierDetail({ chosenSupplier, onBackToSuppliersClick }) {
   const dispatch = useDispatch();
- 
+  const navigate = useNavigate(); // Utilize useNavigate hook
+
   const { currentUser } = useSelector(state => state.user);
 
   const toggleFavorite = async () => {
@@ -70,6 +71,11 @@ export default function SupplierDetail({ chosenSupplier }) {
           </button>}
         </div>
       </div>
+      <button 
+      onClick={() => onBackToSuppliersClick()} 
+      className="mt-8 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-400 transition duration-300 ease-in-out">
+        Back to Suppliers List
+      </button>
     </div>
   );
 }

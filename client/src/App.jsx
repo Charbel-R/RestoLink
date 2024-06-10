@@ -6,6 +6,7 @@ import SignUp from "./pages/SignUp"
 import Profile from "./pages/Profile"
 import Navbar from "./components/Navbar"
 import PrivateRoute from "./components/PrivateRoute";
+import Favorites from "./pages/Favorites"
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path='/sign-up' element={<SignUp />} />
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
+          <Route path='/favorites' element={<Favorites />} />
         </Route>
       </Routes>
     </BrowserRouter>

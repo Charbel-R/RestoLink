@@ -1,7 +1,7 @@
-import SupplierCard from "./SupplierCard"; 
+import SupplierCard from "./SupplierCard";
 import { useSelector } from "react-redux";
 
-export default function SupplierList({suppliers}) {
+export default function SupplierList({ suppliers, onSupplierClick }) {
   const { currentUser } = useSelector(state => state.user);
 
   const favoriteSuppliers = suppliers.filter(supplier => supplier.isFavorite);
@@ -16,13 +16,12 @@ export default function SupplierList({suppliers}) {
           </h3>
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {favoriteSuppliers.map((supplier) => (
-              <li 
+              <li
                 key={supplier._id}
                 className="supplier-card rounded-lg shadow-md overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
-                >
-                {/* <Link to={`/supplier/${supplier.id}`}> */}
-                  <SupplierCard supplier={supplier} />
-                {/* </Link> */}
+                onClick={() => onSupplierClick(supplier)} 
+              >
+                <SupplierCard supplier={supplier} />
               </li>
             ))}
           </ul>
@@ -36,6 +35,7 @@ export default function SupplierList({suppliers}) {
           <li
             key={supplier._id}
             className="supplier-card rounded-lg shadow-md overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
+            onClick={() => onSupplierClick(supplier)}  
           >
             <SupplierCard supplier={supplier} />
           </li>
@@ -44,4 +44,3 @@ export default function SupplierList({suppliers}) {
     </div>
   );
 }
-
