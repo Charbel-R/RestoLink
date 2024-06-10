@@ -31,9 +31,9 @@ export const signIn = async ({ email, password}) => {
     },
     body: JSON.stringify({ email, password})
   })
-  
-  const resp = await user.json()
 
+  const resp = await user.json()
+  
   if (!user.ok) {
     throw new Error(`Request failed with status ${user.status}`);
   }

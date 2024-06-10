@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 // eslint-disable-next-line react/prop-types
 export default function SupplierDetail({ chosenSupplier, onBackToSuppliersClick }) {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Utilize useNavigate hook
+
 
   const { currentUser } = useSelector(state => state.user);
 

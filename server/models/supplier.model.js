@@ -27,10 +27,6 @@ const supplierSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  isFavorite: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 const Supplier = mongoose.model('Supplier', supplierSchema);

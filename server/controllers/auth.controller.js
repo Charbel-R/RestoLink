@@ -35,13 +35,14 @@ exports.signin = async (req, res) => {
     const validatedPass = await bcryptjs.compareSync(password, user.password);
     if (!validatedPass) 
       return res.status(401).json({ message: 'Invalid email or password' });
-    
+
     const accessToken = jwt.sign({ _id: user._id }, SECRET_KEY);
     const { password: hashPass, ...userInfo } = user._doc;
     const expiryDate = new Date(Date.now() + 3600000); //1 hr 
+
     res
-    .cookie('accessToken', accessToken, {httpOnly: true, expires: expiryDate})
-    .status(200).send(userInfo );
+    .cookie('accessToken', accessToken, {httpOnly: true,  expires: expiryDate})
+    .status(200).send({userInfo, accessToken } );
   } catch (error) {
     res
       .status(401)
@@ -85,12 +86,11 @@ exports.updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     const updates = req.body; 
-
+    
     const user = await User.findByIdAndUpdate(id, updates, { new: true });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
     res.status(200).json(user); // Send updated user data
   } catch (error) {
     console.error('Error updating user:', error);
@@ -101,19 +101,18 @@ exports.updateUser = async (req, res) => {
 exports.addToFavorites = async (req, res) => {
   try {
     const { id } = req.params; // Supplier ID to add
-    
-    // const userId = req.user._id; // Extract user ID from token
+
+    const userId = req.user._id; //  Extract user ID from token
 
     const existingSupplier = await Supplier.findById(id);
     if (!existingSupplier) {
       return res.status(404).json({ message: 'Supplier not found' });
     }
 
-    const user = await User.findById(id);
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
-
     if (user.favoriteSuppliers.includes(id)) {
       return res.status(409).json({ message: 'Supplier already in favorites' }); // Handle existing favorite
     }

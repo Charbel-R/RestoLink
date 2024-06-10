@@ -7,10 +7,10 @@ const { verifyToken } = require('../utils/authUser');
 
 router.post('/signup', signup)
 router.post('/signin', signin)
-router.get('/profile', profile)
-router.delete('/user/delete/:id', deleteUser);
-router.put('/user/edit/:id', updateUser);
-router.put('/favorites/:id', addToFavorites);
+router.get('/profile',verifyToken, profile)
+router.delete('/user/delete/:id',verifyToken, deleteUser);
+router.put('/user/edit/:id', verifyToken, updateUser);
+router.put('/favorites/:id',verifyToken, addToFavorites);
 router.get('/signout', signout);
 
 module.exports = router;

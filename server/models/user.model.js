@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     default: 'https://iio.azcast.arizona.edu/sites/default/files/profile-blank-whitebg.png',
   },
   favoriteSuppliers: {
-    type: Array,
+    type: [mongoose.Schema.Types.ObjectId],
     default: []
   }
 }, {timestamps: true});

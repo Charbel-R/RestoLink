@@ -10,6 +10,8 @@ const baseUrl = 'http://localhost:3000';
 
 export default function Profile() {
   const { currentUser } = useSelector(state => state.user);
+  const { token } = useSelector(state => state.user);
+  const accessToken = token;
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState(currentUser.username);
@@ -17,7 +19,7 @@ export default function Profile() {
   // const [password, setPassword] = useState('');
 
   const handleEditUser = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault(); 
 
     const updatedUserData = {
       username,
@@ -26,10 +28,16 @@ export default function Profile() {
     };
 
     try {
+      if (!accessToken) {
+        throw new Error('Missing access token'); // Handle missing token
+      }
       // Update user information on the backend (replace with your actual API call)
       const response = await fetch(`${baseUrl}/auth/user/edit/${currentUser._id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          Authorization: ` ${accessToken}`, 
+        },
         body: JSON.stringify(updatedUserData),
       });
       const updatedData = await response.json();
@@ -66,14 +74,20 @@ export default function Profile() {
       window.location.href = '/sign-in';
     }
   };
-
+ 
   const handleDeleteUser = async () => {
     try {
       // Delete user on the backend (replace with your actual API call)
       const response = await fetch(`${baseUrl}/auth/user/delete/${currentUser._id}`, {
         method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`}, // Assuming token in localStorage
-      });
+        headers: { 
+          'Content-Type': 'application/json',
+          Authorization: ` ${accessToken}`, 
+        
+        },
+      }
+    );
+
       if (!response.ok) {
         throw new Error(await response.text() || 'Delete failed');
       }

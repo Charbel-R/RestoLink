@@ -1,24 +1,37 @@
 /* eslint-disable react/prop-types */
 
 import { useDispatch , useSelector} from 'react-redux';
-import { updateSupplier } from '../../store/slices/supplierSlice'; // Import updateSupplier thunk
+
+const baseUrl = 'http://localhost:3000';
 
 export default function SupplierCard({ supplier }) {
   const dispatch = useDispatch();
 
   const { currentUser } = useSelector(state => state.user);
+  const { token } = useSelector(state => state.user);
+  const accessToken = token;
 
-  const handleToggleFavorite = async () => {
-    const updatedSupplier = {
-      ...supplier,
-      isFavorite: !supplier.isFavorite,
-    };
+  const handleAddFavorite = async () => {
     try {
-      await dispatch(updateSupplier(updatedSupplier));
+      const response = await fetch(`${baseUrl}/auth/favorites/${supplier._id}`, { // Replace with your actual API endpoint
+        method: 'PUT',
+        headers: {
+          Authorization: accessToken, // Include token in headers
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error adding supplier to favorites');
+      }
+
+      // Update local state or dispatch an action to update user data in Redux (if applicable)
+      dispatch({ type: 'user/updateFavorites', payload: { supplierId: supplier._id } }); // Example action dispatch
     } catch (error) {
-      console.error('Error updating supplier favorite:', error);
+      console.error('Error adding supplier to favorites:', error);
     }
   };
+
 
   return (
     <div className="relative">
@@ -48,7 +61,7 @@ export default function SupplierCard({ supplier }) {
       </div>
       {currentUser &&
       <button
-        onClick={handleToggleFavorite}
+        onClick={handleAddFavorite}
         className="absolute top-2 right-2 p-1 bg-white rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
         {supplier.isFavorite ? (

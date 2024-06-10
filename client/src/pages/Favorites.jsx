@@ -13,7 +13,6 @@ export default function Favorites() {
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Your Favorite Suppliers</h1>
       {favoriteSuppliers.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-full">
-         
           <p className="text-xl font-medium text-gray-500">
             Your favorites list is currently empty.
           </p>
