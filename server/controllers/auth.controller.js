@@ -6,14 +6,14 @@ const SECRET_KEY = process.env.SECRET_KEY || 'This isint secure';
 
 
 exports.signup = async (req, res) => {
-  const { username, email, password} = req.body;
+  const { username, email, password, gender } = req.body;
   const user = await User.findOne({ email: email });
   if (user)
     return res
       .status(409).send({ error: '409', message: 'User already exists' });
 
   const hashPass = bcryptjs.hashSync(password, 10);
-  const newUser = new User({username, email, password: hashPass});
+  const newUser = new User({username, email, password: hashPass, gender});
 
   try {
     const { _id } = await newUser.save();

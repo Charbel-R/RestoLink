@@ -18,6 +18,8 @@ export default function Profile() {
 
   const [username, setUsername] = useState(currentUser.username);
   const [email, setEmail] = useState(currentUser.email);
+  const [gender, setGender] = useState(currentUser.gender);
+
   // const [password, setPassword] = useState('');
 
   const handleEditUser = async (e) => {
@@ -26,7 +28,8 @@ export default function Profile() {
     const updatedUserData = {
       username,
       email,
-      // password, // Include password if needed
+      // password, // Include password if needed,
+      gender,
     };
 
     try {
@@ -139,6 +142,19 @@ export default function Profile() {
           className='bg-slate-100 rounded-lg p-3'
           onChange={(e) => setPassword(e.target.value)} // Update password state on change
         /> */}
+        <select
+          id="gender"
+          name="gender"
+          defaultValue={gender}
+          onChange={(e) => setGender(e.target.value)}
+          className="bg-slate-100 text-blue-500 p-2 rounded-lg"
+        >
+          <option value="">Select Gender</option>
+          <option value="female">Female</option>
+          <option value="male">Male</option>
+          <option value="male">Other</option>
+          {/* Add more options as needed */}
+        </select>
         <button type='submit' className='bg-blue-800 text-white p-3 rounded-full uppercase hover:opacity-95 disabled:opacity-80'>
           Update
         </button>

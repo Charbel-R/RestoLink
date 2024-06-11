@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  gender: {
+    type: String,
+    default: ''
+  },
   profilePicture: {
     type: String,
     default: 'https://iio.azcast.arizona.edu/sites/default/files/profile-blank-whitebg.png',

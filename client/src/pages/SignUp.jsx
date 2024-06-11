@@ -7,8 +7,10 @@ export default function SignUp() {
   const [signUpForm, setSignUpForm] = useState({
     username: '',
     email: '',
-    password: ''
+    password: '',
+    gender:'',
   });
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -37,7 +39,8 @@ export default function SignUp() {
     setSignUpForm({
         username: '',
         email: '',
-        password: ''
+        password: '',
+        gender: '',
     })
   }
 
@@ -74,7 +77,22 @@ export default function SignUp() {
           className="bg-slate-100 p-3 rounded-lg"
           onChange={handleChange}
           required
-          />
+        />
+      
+        <select
+          id="gender"
+          name="gender"
+          value={signUpForm.gender}
+          onChange={handleChange}
+          className="bg-slate-100 text-blue-500 p-2 rounded-lg"
+        >
+          <option value="">Select Gender</option>
+          <option value="female">Female</option>
+          <option value="male">Male</option>
+          <option value="male">Other</option>
+          {/* Add more options as needed */}
+        </select>
+      
         <button 
           disabled={isLoading} 
           className="bg-blue-600 text-white p-3 rounded-lg hover:opacity-95 disabled:opacity-80">
