@@ -5,6 +5,7 @@ const initialState = {
   suppliers: [],
   loading: false,
   favoriteSuppliers: [],
+  searchedSuppliers: [],
   error: null,
 };
 
@@ -38,6 +39,13 @@ const suppliersSlice = createSlice({
     resetFavorites: (state) => {
       state.favoriteSuppliers = [];
     },
+    refreshSearchedSuppliers: (state, action) => {
+      state.searchedSuppliers = action.payload
+    },
+    resetSearchedSuppliers: (state) => {
+      state.searchedSuppliers = [];
+    },
+
   },
   extraReducers: (builder) => {
     builder
@@ -68,6 +76,6 @@ const suppliersSlice = createSlice({
   },
 });
 
-export const { resetFavorites } = suppliersSlice.actions;
+export const { resetFavorites, refreshSearchedSuppliers, resetSearchedSuppliers} = suppliersSlice.actions;
 
 export default suppliersSlice.reducer;

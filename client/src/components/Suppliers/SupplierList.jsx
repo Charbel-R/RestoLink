@@ -9,7 +9,7 @@ export default function SupplierList({ onsShowSupplierClick }) {
   const dispatch = useDispatch();
 
   const { currentUser, mySuppliersIds } = useSelector(state => state.user);
-  const { favoriteSuppliers , suppliers} = useSelector(state => state.suppliers);
+  const { suppliers, favoriteSuppliers, searchedSuppliers} = useSelector(state => state.suppliers);
 
   useEffect(() => {
     if (currentUser && mySuppliersIds.length >= 0) {
@@ -38,6 +38,10 @@ export default function SupplierList({ onsShowSupplierClick }) {
           </ul>
         </div>
       )}
+      {searchedSuppliers.length > 0 && (
+        <div>searching</div>
+      )}
+
       <h2 className="text-3xl font-bold mt-7 text-indigo-600 mb-8">
         Find Your Perfect Supplier
       </h2>
