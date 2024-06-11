@@ -1,16 +1,15 @@
 /* eslint-disable react/prop-types */
 
 import { useDispatch , useSelector} from 'react-redux';
-import { updateFavoritesStart, updateFavorites, updateFavoritesFailed } from '../../store/slices/userSlice'; 
+import { updateFavoritesStart, updateFavorites } from '../../store/slices/userSlice'; 
 
 const baseUrl = 'http://localhost:3000';
 
 export default function SupplierCard({ supplier, onsShowSupplierClick }) {
   const dispatch = useDispatch();
 
-  const { currentUser,token } = useSelector(state => state.user);
+  const { currentUser,token, mySuppliersIds } = useSelector(state => state.user);
 
-  const accessToken = token;
 
   const handleToggleFavorite = async () => {
     dispatch(updateFavoritesStart())
@@ -22,7 +21,7 @@ export default function SupplierCard({ supplier, onsShowSupplierClick }) {
       const response = await fetch(`${baseUrl}/auth/favorites/${supplierId}`, {
         method: isFavorite ? 'DELETE' : 'PUT', // Use DELETE for removal PUT for Adding
         headers: {
-          Authorization: accessToken,
+          Authorization: token,
         },
       });
 
@@ -36,7 +35,6 @@ export default function SupplierCard({ supplier, onsShowSupplierClick }) {
       console.error('Error removing supplier from favorites:', error);
     }
   };
-
 
   return (
     <div className="relative">
@@ -70,7 +68,7 @@ export default function SupplierCard({ supplier, onsShowSupplierClick }) {
         onClick={handleToggleFavorite}
         className="absolute top-2 right-2 p-1 bg-white rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-        {supplier.isFavorite ? (
+        {mySuppliersIds.includes(supplier._id) ? (
           <div className="w-4 h-4 bg-blue-600 rounded-full"></div>
         ) : (
           <div className="w-4 h-4 bg-red-400 rounded-full"></div>

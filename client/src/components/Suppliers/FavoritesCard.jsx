@@ -8,6 +8,7 @@ const baseUrl = 'http://localhost:3000';
 export default function FavoritesCard({ supplier, onsShowSupplierClick }) {
   const dispatch = useDispatch();
   const { currentUser,token } = useSelector(state => state.user);
+  const { favoriteSuppliers } = useSelector(state => state.suppliers);
 
   const handleToggleFavorite = async () => {
     dispatch(updateFavoritesStart())
@@ -67,11 +68,7 @@ export default function FavoritesCard({ supplier, onsShowSupplierClick }) {
           onClick={handleToggleFavorite}
           className="absolute top-5 right-5 p-1 bg-white rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-          {supplier.isFavorite ? (
-            <div className="w-4 h-4 bg-blue-600 rounded-full"></div>
-          ) : (
-            <div className="w-4 h-4 bg-red-400 rounded-full"></div>
-          )}
+          <div className="w-4 h-4 bg-blue-600 rounded-full"></div>
         </button>}
       </div>
     </div>
