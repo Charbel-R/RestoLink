@@ -8,7 +8,7 @@ const baseUrl = 'http://localhost:3000';
 
 export default function SupplierDetail({ selectedSupplier, onBackToSuppliersClick }) {
   const dispatch = useDispatch();
-  const { currentUser, token } = useSelector(state => state.user);
+  const { currentUser, token, mySuppliersIds } = useSelector(state => state.user);
 
   const handleToggleFavorite = async () => {
     dispatch(updateFavoritesStart())
@@ -81,7 +81,7 @@ export default function SupplierDetail({ selectedSupplier, onBackToSuppliersClic
           )}
           {currentUser &&
             <button onClick={handleToggleFavorite} className="text-sm font-medium text-blue-500 hover:text-blue-400 transition duration-300 ease-in-out">
-            {supplier.isFavorite ? "Unfavorite" : "Favorite"}
+            {mySuppliersIds.includes(supplier._id) ? "Unfavorite" : "Favorite"}
           </button>}
         </div>
       </div>
