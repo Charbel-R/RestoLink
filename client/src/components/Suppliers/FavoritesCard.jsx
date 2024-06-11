@@ -7,10 +7,7 @@ const baseUrl = 'http://localhost:3000';
 
 export default function FavoritesCard({ supplier, onsShowSupplierClick }) {
   const dispatch = useDispatch();
-
   const { currentUser,token } = useSelector(state => state.user);
-
-  const accessToken = token;
 
   const handleToggleFavorite = async () => {
     dispatch(updateFavoritesStart())
@@ -22,7 +19,7 @@ export default function FavoritesCard({ supplier, onsShowSupplierClick }) {
       const response = await fetch(`${baseUrl}/auth/favorites/${supplierId}`, {
         method: isFavorite ? 'DELETE' : 'PUT', // Use DELETE for removal PUT for Adding
         headers: {
-          Authorization: accessToken,
+          Authorization: token,
         },
       });
 

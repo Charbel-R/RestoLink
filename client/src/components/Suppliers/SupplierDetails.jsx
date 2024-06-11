@@ -1,24 +1,37 @@
 // eslint-disable-next-line react/prop-types
 
 import { useDispatch, useSelector } from 'react-redux';
-// import { updateSupplier } from '../../store/slices/supplierSlice';
+import { updateFavoritesStart, updateFavorites, updateFavoritesFailed } from '../../store/slices/userSlice'; 
+
+const baseUrl = 'http://localhost:3000';
 
 
 export default function SupplierDetail({ selectedSupplier, onBackToSuppliersClick }) {
   const dispatch = useDispatch();
+  const { currentUser, token } = useSelector(state => state.user);
 
-
-  const { currentUser } = useSelector(state => state.user);
-// TODO fix the toggle to be removefavorite 
-  const toggleFavorite = async () => {
-    const updatedSupplier = {
-      ...supplier,
-      isFavorite: !supplier.isFavorite,
-    };
+  const handleToggleFavorite = async () => {
+    dispatch(updateFavoritesStart())
     try {
-      await dispatch(updatedSupplier(updatedSupplier));
+      const { _id: supplierId } = supplier; // Extract supplier ID
+
+      const isFavorite = currentUser?.favoriteSuppliers?.includes(supplierId); // Check if supplier ID exists in favorites
+
+      const response = await fetch(`${baseUrl}/auth/favorites/${supplierId}`, {
+        method: isFavorite ? 'DELETE' : 'PUT', // Use DELETE for removal PUT for Adding
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error removing supplier from favorites');
+      }
+      // Update local state or dispatch an action to update user data in Redux
+      dispatch(updateFavorites({ supplierId })); // Dispatch action with supplier ID
     } catch (error) {
-      console.error('Error updating supplier favorite:', error);
+      console.error('Error removing supplier from favorites:', error);
     }
   };
 
@@ -67,7 +80,7 @@ export default function SupplierDetail({ selectedSupplier, onBackToSuppliersClic
             </div>
           )}
           {currentUser &&
-            <button onClick={toggleFavorite} className="text-sm font-medium text-blue-500 hover:text-blue-400 transition duration-300 ease-in-out">
+            <button onClick={handleToggleFavorite} className="text-sm font-medium text-blue-500 hover:text-blue-400 transition duration-300 ease-in-out">
             {supplier.isFavorite ? "Unfavorite" : "Favorite"}
           </button>}
         </div>
@@ -75,7 +88,7 @@ export default function SupplierDetail({ selectedSupplier, onBackToSuppliersClic
       <button 
       onClick={() => onBackToSuppliersClick()} 
       className="mt-8 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-400 transition duration-300 ease-in-out">
-        Back to Suppliers List
+        Back to List
       </button>
     </div>
   );
