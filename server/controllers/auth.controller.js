@@ -142,10 +142,10 @@ exports.removeFromFavorites = async (req, res) => {
     user.favoriteSuppliers = user.favoriteSuppliers.filter(favId => favId.toString() !== id); // Remove from favorites
 
     await user.save();
-    console.log("favorite Supliers while removing  ==> ", user.favoriteSuppliers)
+
     res.status(200).json({ message: 'Supplier removed from favorites successfully' });
   } catch (error) {
-    console.error('Error removing supplier from favorites:', error);
+
     res.status(500).json({ message: 'Internal server error' });
   }
 };
