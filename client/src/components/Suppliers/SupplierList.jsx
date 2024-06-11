@@ -38,11 +38,25 @@ export default function SupplierList({ onsShowSupplierClick }) {
           </ul>
         </div>
       )}
-      {searchedSuppliers.length > 0 && (
-        <div>searching</div>
+      {searchedSuppliers && (
+        <div>
+          <h2 className="text-3xl font-bold mt-7 text-indigo-600 mb-8">
+            Find Your Perfect Supplier
+          </h2>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            {searchedSuppliers.map((supplier) => (
+              <li
+                key={supplier._id}
+                className="supplier-card rounded-lg shadow-md overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
+              >
+                <SupplierCard supplier={supplier} onsShowSupplierClick={onsShowSupplierClick} />
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
-
-      <h2 className="text-3xl font-bold mt-7 text-indigo-600 mb-8">
+      {/* {the component below is not needed anymore since the search in the navBar was created } */}
+      {/* <h2 className="text-3xl font-bold mt-7 text-indigo-600 mb-8">
         Find Your Perfect Supplier
       </h2>
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -54,7 +68,7 @@ export default function SupplierList({ onsShowSupplierClick }) {
             <SupplierCard supplier={supplier} onsShowSupplierClick={onsShowSupplierClick} />
           </li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 }

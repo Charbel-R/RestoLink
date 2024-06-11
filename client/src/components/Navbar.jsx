@@ -1,26 +1,33 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from 'react';
-import { refreshSearchedSuppliers, resetSearchedSuppliers } from "../store/slices/supplierSlice";
-import { toggleIsLoading } from "../store/slices/userSlice";
+import { useState } from 'react';
+import { updateSearchedSuppliers, resetFavorites } from "../store/slices/supplierSlice";
+
 
 
 
 export default function Navbar() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector(state => state.user);
-  const { suppliers } = useSelector(state => state.suppliers); // Access suppliers data
+  const { suppliers, searchedSuppliers } = useSelector(state => state.suppliers); // Access suppliers data
 
   const [searchTerm, setSearchTerm] = useState("");
-
-  const [searchedSuppliers, setSearchedSuppliers] = useState([]);
+  console.log(searchedSuppliers);
 
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value.toLowerCase()); // Convert search term to lowercase
-    // dispatch(resetSearchedSuppliers())
-    dispatch(toggleIsLoading());
+    // Convert search term to lowercase
+    setSearchTerm(e.target.value.toLowerCase());
+
+    // Reset searchedSuppliers state only if search term is empty
+    if (!searchTerm) {
+      dispatch(updateSearchedSuppliers([])); // Update to an empty array
+    }
+
+    // Reset searchedSuppliers state before filtering
+    dispatch(updateSearchedSuppliers(null));
+
     // Filter suppliers based on search term and category
-    const searchedSuppliers = suppliers.filter((supplier) => {
+    const filteredSuppliers = suppliers.filter((supplier) => {
       const searchTermLowerCase = e.target.value.toLowerCase();
 
       // Filter by category (if category data exists)
@@ -34,18 +41,7 @@ export default function Navbar() {
         return supplier.supplierName.toLowerCase().includes(searchTermLowerCase);
       }
     });
-
-    console.log(searchTerm.length)
-
-    if (!searchTerm) {
-      console.log("hello form reset");
-      dispatch(resetSearchedSuppliers())
-    }
-
-    setSearchedSuppliers(searchedSuppliers)
-    dispatch(refreshSearchedSuppliers(searchedSuppliers))
-   
-
+    dispatch(updateSearchedSuppliers(filteredSuppliers));
   };
 
 
@@ -69,7 +65,6 @@ export default function Navbar() {
             onChange={handleSearchChange}
             className="bg-gray-200 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {/* Implement search functionality here (e.g., call a filter function) */}
         </div>
         <ul className="flex  gap-3">
           <Link to={'/'}>

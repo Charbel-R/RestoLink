@@ -39,11 +39,12 @@ const suppliersSlice = createSlice({
     resetFavorites: (state) => {
       state.favoriteSuppliers = [];
     },
-    refreshSearchedSuppliers: (state, action) => {
-      state.searchedSuppliers = action.payload
-    },
-    resetSearchedSuppliers: (state) => {
-      state.searchedSuppliers = [];
+    updateSearchedSuppliers: (state, action) => {
+      if (action.payload === null) {
+        state.searchedSuppliers = []; // Reset if payload is null
+      } else {
+        state.searchedSuppliers = action.payload; // Update otherwise
+      }
     },
 
   },
@@ -76,6 +77,6 @@ const suppliersSlice = createSlice({
   },
 });
 
-export const { resetFavorites, refreshSearchedSuppliers, resetSearchedSuppliers} = suppliersSlice.actions;
+export const { resetFavorites, updateSearchedSuppliers} = suppliersSlice.actions;
 
 export default suppliersSlice.reducer;
