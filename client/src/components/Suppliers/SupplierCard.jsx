@@ -71,7 +71,7 @@ export default function SupplierCard({ supplier, onsShowSupplierClick }) {
         {mySuppliersIds.includes(supplier._id) ? (
           <div className="w-4 h-4 bg-blue-600 rounded-full"></div>
         ) : (
-          <div className="w-4 h-4 bg-red-400 rounded-full"></div>
+          <div className="w-4 h-4 bg-white border rounded-full"></div>
         )}
       </button>}
     </div>

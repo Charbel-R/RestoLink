@@ -30,7 +30,7 @@ export default function Favorites() {
 
   return (
 
-    <div className="min-h-screen bg-gray-100 px-4 py-8">
+    <div className="min-h-screen bg-blue-50 px-4 py-8">
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Your Favorite Suppliers</h1>
       {favoriteSuppliers.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-full">

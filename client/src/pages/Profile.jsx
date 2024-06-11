@@ -109,65 +109,67 @@ export default function Profile() {
   };
 
   return (
-    <div className='p-3 max-w-lg mx-auto'>
-      <h1 className='text-3xl font-semibold text-center my-7'>
-        Profile
-      </h1>
-      <form className='flex flex-col gap-4' onSubmit={handleEditUser}>
-        <img
-          src={currentUser.profilePicture}
-          alt='Profile image'
-          className='h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2'
-        />
-        <input
-          defaultValue={username}
-          type='text'
-          id='username'
-          placeholder='Username'
-          className='bg-slate-100 rounded-lg p-3'
-          onChange={(e) => setUsername(e.target.value)} // Update username state on change
-        />
-        <input
-          defaultValue={email}
-          type='email'
-          id='email'
-          placeholder='Email'
-          className='bg-slate-100 rounded-lg p-3'
-          onChange={(e) => setEmail(e.target.value)} // Update email state on change
-        />
-        {/* <input
-          type='password'
-          id='password'
-          placeholder='Password (optional)' // Optional
-          className='bg-slate-100 rounded-lg p-3'
-          onChange={(e) => setPassword(e.target.value)} // Update password state on change
-        /> */}
-        <select
-          id="gender"
-          name="gender"
-          defaultValue={gender}
-          onChange={(e) => setGender(e.target.value)}
-          className="bg-slate-100 text-blue-500 p-2 rounded-lg"
-        >
-          <option value="">Select Gender</option>
-          <option value="female">Female</option>
-          <option value="male">Male</option>
-          <option value="male">Other</option>
-          {/* Add more options as needed */}
-        </select>
-        <button type='submit' className='bg-blue-800 text-white p-3 rounded-full uppercase hover:opacity-95 disabled:opacity-80'>
-          Update
-        </button>
-      </form>
-      
-      <div className='flex justify-between mt-5'>
-        <span onClick={handleDeleteUser} className='text-red-700 cursor-pointer'>Delete Account</span>
-        <span onClick={handleSignOut} className='text-red-700 cursor-pointer'>
-          Sign out
-        </span>
+    <div className=' bg-blue-50 h-screen' >
+      <div className='p-3 max-w-lg mx-auto '>
+        <h1 className='text-3xl font-semibold text-center my-7'>
+          Profile
+        </h1>
+        <form className='flex flex-col gap-4' onSubmit={handleEditUser}>
+          <img
+            src={currentUser.profilePicture}
+            alt='Profile image'
+            className='h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2'
+          />
+          <input
+            defaultValue={username}
+            type='text'
+            id='username'
+            placeholder='Username'
+            className='bg-white rounded-lg p-3'
+            onChange={(e) => setUsername(e.target.value)} // Update username state on change
+          />
+          <input
+            defaultValue={email}
+            type='email'
+            id='email'
+            placeholder='Email'
+            className='bg-white rounded-lg p-3'
+            onChange={(e) => setEmail(e.target.value)} // Update email state on change
+          />
+          {/* <input
+            type='password'
+            id='password'
+            placeholder='Password (optional)' // Optional
+            className='bg-slate-100 rounded-lg p-3'
+            onChange={(e) => setPassword(e.target.value)} // Update password state on change
+          /> */}
+          <select
+            id="gender"
+            name="gender"
+            defaultValue={gender}
+            onChange={(e) => setGender(e.target.value)}
+            className="bg-white text-blue-500 p-2 rounded-lg"
+          >
+            <option value="">Select Gender</option>
+            <option value="female">Female</option>
+            <option value="male">Male</option>
+            <option value="male">Other</option>
+            {/* Add more options as needed */}
+          </select>
+          <button type='submit' className='bg-blue-800 text-white p-3 rounded-full uppercase hover:opacity-95 disabled:opacity-80'>
+            Update
+          </button>
+        </form>
+        
+        <div className='flex justify-between mt-5'>
+          <span onClick={handleDeleteUser} className='text-red-700 cursor-pointer'>Delete Account</span>
+          <span onClick={handleSignOut} className='text-red-700 cursor-pointer'>
+            Sign out
+          </span>
+        </div>
+        {/* Import ToastContainer at the end */}
+        <ToastContainer />
       </div>
-      {/* Import ToastContainer at the end */}
-      <ToastContainer />
     </div>
   );
 }

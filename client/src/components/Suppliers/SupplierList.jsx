@@ -26,33 +26,38 @@ export default function SupplierList({ onsShowSupplierClick }) {
           <h3 className="text-2xl font-bold  text-indigo-600 mb-4">
             Your Favorite Suppliers
           </h3>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {favoriteSuppliers.map((supplier) => (
-              <li
-                key={supplier._id}
-                className="supplier-card rounded-lg shadow-md overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
-              >
-                <FavoritesCard supplier={supplier} onsShowSupplierClick={onsShowSupplierClick} />
-              </li>
-            )) }
-          </ul>
+          <div className="overflow-x-scroll scrollbar-thin">
+            <ul className="inline-flex space-x-8">
+              {favoriteSuppliers.map((supplier) => (
+                <li
+                  key={supplier._id}
+                  className="supplier-card rounded-lg shadow-md w-72 overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
+                >
+                  <FavoritesCard supplier={supplier} onsShowSupplierClick={onsShowSupplierClick} />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
-      {searchedSuppliers && (
-        <div>
+       {/* Searched Suppliers with Scrolling */}
+       {searchedSuppliers && (
+        <div className="mt-8">
           <h2 className="text-3xl font-bold mt-7 text-indigo-600 mb-8">
             Find Your Perfect Supplier
           </h2>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {searchedSuppliers.map((supplier) => (
-              <li
-                key={supplier._id}
-                className="supplier-card rounded-lg shadow-md overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
-              >
-                <SupplierCard supplier={supplier} onsShowSupplierClick={onsShowSupplierClick} />
-              </li>
-            ))}
-          </ul>
+          <div className="overflow-x-scroll scrollbar-thin">
+            <ul className="inline-flex space-x-8">
+              {searchedSuppliers.map((supplier) => (
+                <li
+                  key={supplier._id}
+                  className="supplier-card rounded-lg shadow-md w-80 h-auto overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
+                >
+                  <SupplierCard supplier={supplier} onsShowSupplierClick={onsShowSupplierClick} />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
       {/* {the component below is not needed anymore since the search in the navBar was created } */}

@@ -57,13 +57,13 @@ export default function Navbar() {
             <h3 className="cursor-none font-semibold"> Welcome {currentUser.username} </h3>
           )}
         </div>
-        <div className="flex items-center gap-2"> {/* Search field section */}
+        <div className="flex text-blue-700 items-center gap-2"> {/* Search field section */}
           <input
             type="text"
             placeholder="Search Suppliers"
             value={searchTerm}
             onChange={handleSearchChange}
-            className="bg-gray-200 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <ul className="flex  gap-3">
