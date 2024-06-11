@@ -2,6 +2,8 @@ import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 
+// trial 
+
 export default function Navbar() {
   const { currentUser } = useSelector(state => state.user);
   
