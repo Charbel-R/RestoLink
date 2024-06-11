@@ -1,30 +1,31 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { updateSupplier } from '../../store/slices/supplierSlice';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-
 // eslint-disable-next-line react/prop-types
-export default function SupplierDetail({ chosenSupplier, onBackToSuppliersClick }) {
+
+import { useDispatch, useSelector } from 'react-redux';
+// import { updateSupplier } from '../../store/slices/supplierSlice';
+
+
+export default function SupplierDetail({ selectedSupplier, onBackToSuppliersClick }) {
   const dispatch = useDispatch();
 
 
   const { currentUser } = useSelector(state => state.user);
-
+// TODO fix the toggle to be removefavorite 
   const toggleFavorite = async () => {
     const updatedSupplier = {
       ...supplier,
       isFavorite: !supplier.isFavorite,
     };
     try {
-      await dispatch(updateSupplier(updatedSupplier));
+      await dispatch(updatedSupplier(updatedSupplier));
     } catch (error) {
       console.error('Error updating supplier favorite:', error);
     }
   };
 
-  if (!chosenSupplier) {
+  if (!selectedSupplier) {
     return <div>Supplier not found!</div>;
   }
-  const supplier = chosenSupplier;
+  const supplier = selectedSupplier;
 
   return (
     <div className="container mx-auto mt-20 px-4 py-8">

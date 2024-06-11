@@ -121,7 +121,6 @@ exports.addToFavorites = async (req, res) => {
     }
 
     await user.save();
-    console.log("while addtofavs", user)
     res.status(200).json({ message: 'Supplier added to favorites successfully' });
   } catch (error) {
     console.error('Error adding supplier to favorites:', error);
@@ -132,9 +131,9 @@ exports.addToFavorites = async (req, res) => {
 exports.removeFromFavorites = async (req, res) => {
   try {
     const { id } = req.params; // Supplier ID to remove
-    console.log("suppliers id to remove => ",id)
+
     const userId = req.user._id; //  Extract user ID from token
-console.log('usersId', userId)
+
     const user = await User.findById(userId);
     if (!user) {
       return res.status(401).json({ message: 'Unauthorized' });

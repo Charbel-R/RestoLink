@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSuppliersById } from "../../store/slices/supplierSlice";
 import SupplierCard from "./SupplierCard";
+import FavoritesCard from "./FavoritesCard";
 
 
 export default function SupplierList({ onsShowSupplierClick }) {
@@ -30,9 +31,8 @@ export default function SupplierList({ onsShowSupplierClick }) {
               <li
                 key={supplier._id}
                 className="supplier-card rounded-lg shadow-md overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
-                // onClick={() => onsShowSupplierClick(supplier)} 
               >
-                <SupplierCard supplier={supplier} />
+                <FavoritesCard supplier={supplier} onsShowSupplierClick={onsShowSupplierClick} />
               </li>
             )) }
           </ul>
@@ -46,9 +46,8 @@ export default function SupplierList({ onsShowSupplierClick }) {
           <li
             key={supplier._id}
             className="supplier-card rounded-lg shadow-md overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
-            // onClick={() => onsShowSupplierClick(supplier)}  
           >
-            <SupplierCard supplier={supplier} />
+            <SupplierCard supplier={supplier} onsShowSupplierClick={onsShowSupplierClick} />
           </li>
         ))}
       </ul>

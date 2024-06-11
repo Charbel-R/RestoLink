@@ -5,7 +5,7 @@ import { updateFavoritesStart, updateFavorites, updateFavoritesFailed } from '..
 
 const baseUrl = 'http://localhost:3000';
 
-export default function SupplierCard({ supplier, onsShowSupplierClick }) {
+export default function FavoritesCard({ supplier, onsShowSupplierClick }) {
   const dispatch = useDispatch();
 
   const { currentUser,token } = useSelector(state => state.user);
@@ -42,13 +42,12 @@ export default function SupplierCard({ supplier, onsShowSupplierClick }) {
     <div className="relative">
       <div className="p-6 flex flex-col items-center space-y-4">
         <img
-          onClick={() => onsShowSupplierClick(supplier)}
+          onClick={() => onsShowSupplierClick(supplier)} 
           className="supplier-logo h-20  object-cover rounded-full mx-auto mb-4 cursor-pointer"
           src={supplier.logoUrl}
           alt={supplier.supplierName + " Logo"}
         />
         <h3 className="text-xl font-medium text-center text-gray-800">{supplier.supplierName}</h3>
-        <p className="text-gray-600 text-center">{supplier.description}</p>
         <div className="flex justify-center space-x-4">
           {supplier.website && ( // Check if website exists before rendering link
             <a
@@ -65,17 +64,19 @@ export default function SupplierCard({ supplier, onsShowSupplierClick }) {
           </span>
         </div>
       </div>
-      {currentUser &&
-      <button
-        onClick={handleToggleFavorite}
-        className="absolute top-2 right-2 p-1 bg-white rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-        {supplier.isFavorite ? (
-          <div className="w-4 h-4 bg-blue-600 rounded-full"></div>
-        ) : (
-          <div className="w-4 h-4 bg-red-400 rounded-full"></div>
-        )}
-      </button>}
+      <div className="flex justify-center">
+        {currentUser &&
+        <button
+          onClick={handleToggleFavorite}
+          className="absolute top-5 right-5 p-1 bg-white rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+          {supplier.isFavorite ? (
+            <div className="w-4 h-4 bg-blue-600 rounded-full"></div>
+          ) : (
+            <div className="w-4 h-4 bg-red-400 rounded-full"></div>
+          )}
+        </button>}
+      </div>
     </div>
   );
 }
