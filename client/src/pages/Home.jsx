@@ -24,8 +24,6 @@ export default function Home() {
     setSelectedSupplier(null); // Update selected supplier state on click
   };
 
-
-
   return (
     <>
       {isLoading && <p>Loading suppliers...</p>}
@@ -33,10 +31,10 @@ export default function Home() {
         {suppliers.length > 0 && (
           <div className="my-2 mx-5">
             {!selectedSupplier && ( // Render SupplierList if no supplier is selected
-              <SupplierList suppliers={suppliers} onSupplierClick={handleShowSupplier} />
+              <SupplierList suppliers={suppliers} onsShowSupplierClick={handleShowSupplier} />
             )}
             {selectedSupplier && ( // Render SupplierDetail only if selectedSupplier has a value
-              <SupplierDetail chosenSupplier={selectedSupplier} onBackToSuppliersClick={handleHideSupplier} />
+              <SupplierDetail selectedSupplier={selectedSupplier} onBackToSuppliersClick={handleHideSupplier} />
             )}
           </div>
         )}

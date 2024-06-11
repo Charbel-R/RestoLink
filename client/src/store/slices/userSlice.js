@@ -41,17 +41,27 @@ const userSlice = createSlice({
     updateUser: (state, action) => {
       state.currentUser = action.payload; // Update currentUser with updated data
     },
+    updateFavoritesStart(state) {
+      state.isLoading = true
+    },
     updateFavorites(state, action) {
       const { supplierId } = action.payload;
+      // check if supplierId does not exist and Adds it  / otherwise deletes it 
       if (state.currentUser) {
         const isFavorite = state.currentUser.favoriteSuppliers.includes(supplierId);
         state.currentUser.favoriteSuppliers = isFavorite
-          ? state.currentUser.favoriteSuppliers.filter(id => id !== supplierId)
-          : [...state.currentUser.favoriteSuppliers, supplierId];
+          ? state.currentUser.favoriteSuppliers.filter(id => id.toString() !== supplierId) //Remove if already favorite 
+          : [...state.currentUser.favoriteSuppliers, supplierId]; // Add if not favorite 
+
       }
+      state.mySuppliersIds = state.currentUser.favoriteSuppliers;
+      state.isLoading = false
     },
+    updateFavoritesFailed(state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    }
   },
 });
-
-export const { signInStart, signInSuccess, signInFailed, signOut, updateUser, updateFavorites } = userSlice.actions;
+export const { signInStart, signInSuccess, signInFailed, signOut, updateUser, updateFavorites, updateFavoritesStart, updateFavoritesFailed } = userSlice.actions;
 export default userSlice.reducer;

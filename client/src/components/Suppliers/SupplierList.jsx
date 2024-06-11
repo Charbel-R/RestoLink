@@ -1,22 +1,21 @@
-import SupplierCard from "./SupplierCard";
-import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchSuppliersById } from "../../store/slices/supplierSlice";
+import SupplierCard from "./SupplierCard";
 
 
-export default function SupplierList({ onSupplierClick }) {
+export default function SupplierList({ onsShowSupplierClick }) {
   const dispatch = useDispatch();
 
   const { currentUser, mySuppliersIds } = useSelector(state => state.user);
   const { favoriteSuppliers , suppliers} = useSelector(state => state.suppliers);
 
-  console.log(mySuppliersIds)
   useEffect(() => {
-    if (currentUser && mySuppliersIds.length > 0) {
-      dispatch(fetchSuppliersById(mySuppliersIds)); // Dispatch thunk with favorite IDs
+    if (currentUser && mySuppliersIds.length >= 0) {
+      dispatch(fetchSuppliersById(mySuppliersIds)); // Dispatch fetch suppliers with user favorite IDs
     }
   }, [currentUser, dispatch, mySuppliersIds]); // Include dispatch in dependency array
+
 
   return (
     <div className="container mx-auto px-4 ">
@@ -31,7 +30,7 @@ export default function SupplierList({ onSupplierClick }) {
               <li
                 key={supplier._id}
                 className="supplier-card rounded-lg shadow-md overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
-                onClick={() => onSupplierClick(supplier)} 
+                // onClick={() => onsShowSupplierClick(supplier)} 
               >
                 <SupplierCard supplier={supplier} />
               </li>
@@ -47,7 +46,7 @@ export default function SupplierList({ onSupplierClick }) {
           <li
             key={supplier._id}
             className="supplier-card rounded-lg shadow-md overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
-            onClick={() => onSupplierClick(supplier)}  
+            // onClick={() => onsShowSupplierClick(supplier)}  
           >
             <SupplierCard supplier={supplier} />
           </li>

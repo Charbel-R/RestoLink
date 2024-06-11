@@ -1,12 +1,24 @@
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import SupplierCard from '../components/Suppliers/SupplierCard';
+import { fetchSuppliersById } from "../store/slices/supplierSlice";
 
 export default function Favorites() {
+  const dispatch = useDispatch();
+  // const { favoriteSuppliers } = useSelector(state => state.suppliers)
 
-  const { favoriteSuppliers } = useSelector(state => state.suppliers)
+  
+  const { currentUser, mySuppliersIds } = useSelector(state => state.user);
+  const { favoriteSuppliers } = useSelector(state => state.suppliers);
 
-// console.log(favoriteSuppliers);
+  useEffect(() => {
+    if (currentUser && mySuppliersIds.length >= 0) {
+      dispatch(fetchSuppliersById(mySuppliersIds)); // Dispatch fetch suppliers with user favorite IDs
+    }
+  }, [currentUser, dispatch, mySuppliersIds]); // Include dispatch in dependency array
+
+
 
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-8">

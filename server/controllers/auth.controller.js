@@ -100,7 +100,7 @@ exports.updateUser = async (req, res) => {
 
 exports.addToFavorites = async (req, res) => {
   try {
-    const { id } = req.params; // Supplier ID to add
+    const { id } = req.params; // Supplier ID to add/remove
 
     const userId = req.user._id; //  Extract user ID from token
 
@@ -113,16 +113,40 @@ exports.addToFavorites = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
-    if (user.favoriteSuppliers.includes(id)) {
-      return res.status(409).json({ message: 'Supplier already in favorites' }); // Handle existing favorite
+
+    const isFavorite = user.favoriteSuppliers.includes(id);
+
+    if (!isFavorite) { // Only add if not already a favorite
+      user.favoriteSuppliers.push(id); // Add supplier ID to favorites list
     }
 
-    user.favoriteSuppliers.push(id);
     await user.save();
-
+    console.log("while addtofavs", user)
     res.status(200).json({ message: 'Supplier added to favorites successfully' });
   } catch (error) {
     console.error('Error adding supplier to favorites:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+exports.removeFromFavorites = async (req, res) => {
+  try {
+    const { id } = req.params; // Supplier ID to remove
+    console.log("suppliers id to remove => ",id)
+    const userId = req.user._id; //  Extract user ID from token
+console.log('usersId', userId)
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    user.favoriteSuppliers = user.favoriteSuppliers.filter(favId => favId.toString() !== id); // Remove from favorites
+
+    await user.save();
+    console.log("favorite Supliers while removing  ==> ", user.favoriteSuppliers)
+    res.status(200).json({ message: 'Supplier removed from favorites successfully' });
+  } catch (error) {
+    console.error('Error removing supplier from favorites:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };

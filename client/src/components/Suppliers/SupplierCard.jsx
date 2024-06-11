@@ -1,34 +1,39 @@
 /* eslint-disable react/prop-types */
 
 import { useDispatch , useSelector} from 'react-redux';
+import { updateFavoritesStart, updateFavorites, updateFavoritesFailed } from '../../store/slices/userSlice'; 
 
 const baseUrl = 'http://localhost:3000';
 
 export default function SupplierCard({ supplier }) {
   const dispatch = useDispatch();
 
-  const { currentUser } = useSelector(state => state.user);
-  const { token } = useSelector(state => state.user);
+  const { currentUser,token } = useSelector(state => state.user);
+
   const accessToken = token;
 
-  const handleAddFavorite = async () => {
+  const handleToggleFavorite = async () => {
+    dispatch(updateFavoritesStart())
     try {
-      const response = await fetch(`${baseUrl}/auth/favorites/${supplier._id}`, { // Replace with your actual API endpoint
-        method: 'PUT',
+      const { _id: supplierId } = supplier; // Extract supplier ID
+
+      const isFavorite = currentUser?.favoriteSuppliers?.includes(supplierId); // Check if supplier ID exists in favorites
+
+      const response = await fetch(`${baseUrl}/auth/favorites/${supplierId}`, {
+        method: isFavorite ? 'DELETE' : 'PUT', // Use DELETE for removal PUT for Adding
         headers: {
-          Authorization: accessToken, // Include token in headers
+          Authorization: accessToken,
         },
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Error adding supplier to favorites');
+        throw new Error(errorData.message || 'Error removing supplier from favorites');
       }
-
-      // Update local state or dispatch an action to update user data in Redux (if applicable)
-      dispatch({ type: 'user/updateFavorites', payload: { supplierId: supplier._id } }); // Example action dispatch
+      // Update local state or dispatch an action to update user data in Redux
+      dispatch(updateFavorites({ supplierId })); // Dispatch action with supplier ID
     } catch (error) {
-      console.error('Error adding supplier to favorites:', error);
+      console.error('Error removing supplier from favorites:', error);
     }
   };
 
@@ -61,7 +66,7 @@ export default function SupplierCard({ supplier }) {
       </div>
       {currentUser &&
       <button
-        onClick={handleAddFavorite}
+        onClick={handleToggleFavorite}
         className="absolute top-2 right-2 p-1 bg-white rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
         {supplier.isFavorite ? (
