@@ -66,12 +66,12 @@ export default function SupplierCard({ supplier, onsShowSupplierClick }) {
       {currentUser &&
       <button
         onClick={handleToggleFavorite}
-        className="absolute top-2 right-2 p-1 bg-white rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="absolute top-4 right-4 p-1 bg-white rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
         {mySuppliersIds.includes(supplier._id) ? (
-          <div className="w-4 h-4 bg-blue-600 rounded-full"></div>
+          <div className="w-5 h-5 bg-blue-600 rounded-full"></div>
         ) : (
-          <div className="w-4 h-4 bg-white border rounded-full"></div>
+          <div className="w-5 h-5 bg-white border rounded-full"></div>
         )}
       </button>}
     </div>
