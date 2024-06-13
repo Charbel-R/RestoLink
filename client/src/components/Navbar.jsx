@@ -9,39 +9,38 @@ import { updateSearchedSuppliers, resetFavorites } from "../store/slices/supplie
 export default function Navbar() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector(state => state.user);
-  const { suppliers, searchedSuppliers } = useSelector(state => state.suppliers); // Access suppliers data
+  const { suppliers } = useSelector(state => state.suppliers); // Access suppliers data
 
   const [searchTerm, setSearchTerm] = useState("");
-  console.log(searchedSuppliers);
+
 
   const handleSearchChange = (e) => {
     // Convert search term to lowercase
-    setSearchTerm(e.target.value.toLowerCase());
-
+    const searchTermLowerCase = e.target.value.toLowerCase();
+    setSearchTerm(searchTermLowerCase);
+  
     // Reset searchedSuppliers state only if search term is empty
-    if (!searchTerm) {
+    if (!searchTermLowerCase) {
       dispatch(updateSearchedSuppliers([])); // Update to an empty array
+    } else {
+      // Reset searchedSuppliers state before filtering
+      dispatch(updateSearchedSuppliers(null));
+  
+      // Filter suppliers based on search term and category
+      const filteredSuppliers = suppliers.filter((supplier) => {
+        // Filter by category (if category data exists)
+        if (supplier.category) {
+          return (
+            supplier.category.toLowerCase().includes(searchTermLowerCase) ||
+            supplier.supplierName.toLowerCase().includes(searchTermLowerCase)
+          );
+        } else {
+          // Filter by name if no category data
+          return supplier.supplierName.toLowerCase().includes(searchTermLowerCase);
+        }
+      });
+      dispatch(updateSearchedSuppliers(filteredSuppliers));
     }
-
-    // Reset searchedSuppliers state before filtering
-    dispatch(updateSearchedSuppliers(null));
-
-    // Filter suppliers based on search term and category
-    const filteredSuppliers = suppliers.filter((supplier) => {
-      const searchTermLowerCase = e.target.value.toLowerCase();
-
-      // Filter by category (if category data exists)
-      if (supplier.category) {
-        return (
-          supplier.category.toLowerCase().includes(searchTermLowerCase) ||
-          supplier.supplierName.toLowerCase().includes(searchTermLowerCase)
-        );
-      } else {
-        // Filter by name if no category data
-        return supplier.supplierName.toLowerCase().includes(searchTermLowerCase);
-      }
-    });
-    dispatch(updateSearchedSuppliers(filteredSuppliers));
   };
 
 

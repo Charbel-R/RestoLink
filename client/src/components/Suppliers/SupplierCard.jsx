@@ -46,7 +46,10 @@ export default function SupplierCard({ supplier, onsShowSupplierClick }) {
           alt={supplier.supplierName + " Logo"}
         />
         <h3 className="text-xl font-medium text-center text-gray-800">{supplier.supplierName}</h3>
-        <p className="text-gray-600 text-center">{supplier.description}</p>
+        <p className="text-gray-600 text-center">
+          {supplier.description.split(" ").slice(0, 10).join(" ")}
+          {supplier.description.split(" ").length > 10 ? "..." : ""}
+        </p>
         <div className="flex justify-center space-x-4">
           {supplier.website && ( // Check if website exists before rendering link
             <a
@@ -63,17 +66,18 @@ export default function SupplierCard({ supplier, onsShowSupplierClick }) {
           </span>
         </div>
       </div>
-      {currentUser &&
-      <button
-        onClick={handleToggleFavorite}
-        className="absolute top-4 right-4 p-1 bg-white rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      {currentUser && (
+        <button
+          onClick={handleToggleFavorite}
+          className="absolute top-4 right-4 p-1 bg-white rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-        {mySuppliersIds.includes(supplier._id) ? (
-          <div className="w-5 h-5 bg-blue-600 rounded-full"></div>
-        ) : (
-          <div className="w-5 h-5 bg-white border rounded-full"></div>
-        )}
-      </button>}
+          {mySuppliersIds.includes(supplier._id) ? (
+            <div className="w-5 h-5 bg-blue-600 rounded-full"></div>
+          ) : (
+            <div className="w-5 h-5 bg-white border rounded-full"></div>
+          )}
+        </button>
+      )}
     </div>
   );
 }

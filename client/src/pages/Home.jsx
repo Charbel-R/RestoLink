@@ -29,7 +29,7 @@ export default function Home() {
       {isLoading && <p>Loading suppliers...</p>}
         {error && <p>Error: {error}</p>}
         {suppliers.length > 0 && (
-          <div className="py-5 h-screen bg-blue-50">
+          <div className="py-5 h-auto bg-blue-50">
             {!selectedSupplier && ( // Render SupplierList if no supplier is selected
               <SupplierList suppliers={suppliers} onsShowSupplierClick={handleShowSupplier} />
             )}

@@ -22,7 +22,7 @@ export default function SupplierList({ onsShowSupplierClick }) {
     <div className="container mx-auto px-4 ">
       {/* List of Favorite Suppliers (conditionally rendered) */}
       {currentUser && favoriteSuppliers.length > 0 && (
-        <div className="mt-8">
+        <div className="mt-1">
           <h3 className="text-2xl font-bold  text-indigo-600 mb-4">
             Your Favorite Suppliers
           </h3>
@@ -31,7 +31,7 @@ export default function SupplierList({ onsShowSupplierClick }) {
               {favoriteSuppliers.map((supplier) => (
                 <li
                   key={supplier._id}
-                  className="supplier-card rounded-lg shadow-md w-72 overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
+                  className="supplier-card rounded-lg shadow-md w-72 h-auto overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
                 >
                   <FavoritesCard supplier={supplier} onsShowSupplierClick={onsShowSupplierClick} />
                 </li>
@@ -41,17 +41,17 @@ export default function SupplierList({ onsShowSupplierClick }) {
         </div>
       )}
        {/* Searched Suppliers with Scrolling */}
-       {searchedSuppliers && (
+       {searchedSuppliers.length > 0 && (
         <div className="mt-8">
           <h2 className="text-3xl font-bold mt-7 text-indigo-600 mb-8">
-            Find Your Perfect Supplier
+            Search results
           </h2>
           <div className="overflow-x-scroll scrollbar-thin">
             <ul className="inline-flex space-x-8">
               {searchedSuppliers.map((supplier) => (
                 <li
                   key={supplier._id}
-                  className="supplier-card rounded-lg shadow-md w-80 h-auto overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
+                  className="supplier-card rounded-lg shadow-md w-96 h-80 overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
                 >
                   <SupplierCard supplier={supplier} onsShowSupplierClick={onsShowSupplierClick} />
                 </li>
@@ -61,19 +61,23 @@ export default function SupplierList({ onsShowSupplierClick }) {
         </div>
       )}
       {/* {the component below is not needed anymore since the search in the navBar was created } */}
-      {/* <h2 className="text-3xl font-bold mt-7 text-indigo-600 mb-8">
-        Find Your Perfect Supplier
-      </h2>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {suppliers.map((supplier) => (
-          <li
-            key={supplier._id}
-            className="supplier-card rounded-lg shadow-md overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
-          >
-            <SupplierCard supplier={supplier} onsShowSupplierClick={onsShowSupplierClick} />
-          </li>
-        ))}
-      </ul> */}
+      <div className="mt-8">
+        <h2 className="text-3xl font-bold mt-7 text-indigo-600 mb-8">
+          Find Your Perfect Supplier
+        </h2>
+        <div className="overflow-x-scroll scrollbar-thin">
+          <ul className="inline-flex space-x-8">
+            {suppliers.map((supplier) => (
+              <li
+                key={supplier._id}
+                className="supplier-card rounded-lg shadow-md w-80 h-auto overflow-hidden bg-white transform hover:scale-105 transition duration-300 ease-in-out"
+              >
+                <SupplierCard supplier={supplier} onsShowSupplierClick={onsShowSupplierClick} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
