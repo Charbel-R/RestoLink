@@ -1,7 +1,7 @@
 // eslint-disable-next-line react/prop-types
 
 import { useDispatch, useSelector } from 'react-redux';
-import { updateFavoritesStart, updateFavorites, updateFavoritesFailed } from '../../store/slices/userSlice'; 
+import { updateFavoritesStart, updateFavorites } from '../../store/slices/userSlice'; 
 
 const baseUrl = 'http://localhost:3000';
 
