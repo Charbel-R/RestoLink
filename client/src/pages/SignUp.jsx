@@ -30,7 +30,7 @@ export default function SignUp() {
       setError(false);
       await signUp(signUpForm);
       setIsLoading(false);
-      navigate('/sign-in')
+      navigate('/home')
     } catch (error) {
       setIsLoading(false);
       setError(true)

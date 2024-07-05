@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from 'react';
-import { updateSearchedSuppliers, resetFavorites } from "../store/slices/supplierSlice";
+import { updateSearchedSuppliers } from "../store/slices/supplierSlice";
 
 
 

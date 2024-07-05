@@ -6,7 +6,6 @@ const initialState = {
   currentUser: null,
   token: null,
   mySuppliersIds: [],
-  mySuppliersData: [],
   isLoading: false,
   error: false,
 };
@@ -48,6 +47,7 @@ const userSlice = createSlice({
     updateFavoritesStart(state) {
       state.isLoading = true
     },
+    // TODO: updateFavorites reducer
     updateFavorites(state, action) {
       const { supplierId } = action.payload;
       // check if supplierId does not exist and Adds it  / otherwise deletes it 
